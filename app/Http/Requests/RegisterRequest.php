@@ -30,15 +30,17 @@ class RegisterRequest extends FormRequest
             'email' => 'required|max:255|string|unique:users,email',
             'password' => 'required|max:255|confirmed',
             'role' => 'required|string|in:freelancer,client',
-            'description' => 'string|max:255'
+
         ];
 
         if ($this->input('role') == 'client') {
             $rules['enterprise'] = 'max:255|string';
+            $rules['description'] = 'max:255|string';
         } else if ($this->input('role') == 'freelancer') {
             $rules['price'] = 'required|numeric|min:0';
             $rules['portfolio'] = 'max:255|string';
             $rules['availability'] = 'string|max:255';
+            $rules['description'] = 'max:255|string';
         }
 
         return $rules;
