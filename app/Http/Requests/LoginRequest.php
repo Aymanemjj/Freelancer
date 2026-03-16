@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LoginRequest extends FormRequest
 {
@@ -12,18 +14,44 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'email' => 'required|max:255|string|email',
+            'password' => 'required|max:255'
         ];
     }
+
+    public function message()
+    {
+        return [
+            'email.required' => 'Email is a required input.',
+            'email.max' => 'Email needs to be less than 255 charachters.',
+
+            'password.required' => 'Password is a required input.',
+            'password.max' => 'Password needs to be less than 255 charachters.',
+
+        ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+        $response = response()->json([
+            'message' => 'Invalid data send',
+            'details' => $errors->messages(),
+        ], 422);
+
+        throw new HttpResponseException($response);
+    }
+
 }
+
