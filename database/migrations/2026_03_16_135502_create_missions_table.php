@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('missions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('title');
+            $table->text('description');
+            $table->float('budget');
+            $table->string('duration');
+            $table->string('status')->default('pending');    
+            $table->boolean('active')->default(true);
+            $table->softDeletes();
         });
     }
 

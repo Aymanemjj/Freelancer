@@ -11,7 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('name');
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->boolean('active')->default(true);
+            $table->string('role');
+            $table->float('price');
+            $table->string('portfolio_link')->nullable();
+            $table->string('availability')->default('Any time');
+            $table->float('rating')->default(0);
+            $table->string('enterprise')->nullable();
+            $table->string('description')->nullable();
+            $table->softDeletes();
+        });
     }
 
     /**

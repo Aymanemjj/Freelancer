@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('mission_technologies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('mission_id')->constrained();
+            $table->foreignId('technology_id')->constrained();
+            $table->softDeletes();
         });
     }
 

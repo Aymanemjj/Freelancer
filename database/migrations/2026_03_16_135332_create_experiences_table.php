@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('experiences', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('title');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->foreignId('user_id')->constrained();
+            $table->softDeletes();
         });
     }
 

@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('competence_users', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('competence_id')->constrained();
+            $table->softDeletes();
         });
     }
 

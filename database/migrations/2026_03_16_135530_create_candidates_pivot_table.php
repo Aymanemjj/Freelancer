@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('candidates_pivot', function (Blueprint $table) {
+        Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+            $table->text('letter');
+            $table->float('price');
+            $table->string('status')->default('pending');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('mission_id')->constrained();
         });
     }
 
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidates_pivot');
+        Schema::dropIfExists('candidates');
     }
 };
