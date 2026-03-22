@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterClientRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\AuthService;
@@ -19,5 +20,9 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request){
         $this->AuthService->register($request);
+    }
+
+    public function login(LoginRequest $request){
+        $this->AuthService->login($request);
     }
 }
