@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Freelancer extends Model
+class Freelancer extends User
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -17,11 +17,16 @@ class Freelancer extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'password',
+        'price',
+        'portfolio',
+        'availability',
+        'rating',
+        'description',
+        'competences',
+        'technologies',
     ];
+
+    protected $table= 'users';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,5 +66,9 @@ class Freelancer extends Model
     public function targetReviews()
     {
         return $this->hasMany(Review::class, 'target_id');
+    }
+
+    public function experiences(){
+        return $this->hasMany(Experience::class, 'user_id');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Client extends Model
+class Client extends User
 {
         /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -17,12 +17,12 @@ class Client extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'password',
+        'entreprise',
+        'description',
+        'rating',
     ];
 
+    protected $table= 'users';
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -48,7 +48,7 @@ class Client extends Model
 
 
     public function missions(){
-       return $this->hasMany(Mission::class);
+       return $this->hasMany(Mission::class, 'owner_id');
     }
 
     public function ownerReviews(){

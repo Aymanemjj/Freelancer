@@ -13,6 +13,6 @@ class Candidate extends Model
     }
 
     public function owner(){
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Freelancer::class, 'user_id');
     }
 }
