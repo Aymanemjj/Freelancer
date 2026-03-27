@@ -25,18 +25,19 @@ class UpdateMissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=>'string|max:255',
-            "description"=>'string',
-            'budget'=>"float",
-            'duration'=>'string|max:255',
-            'category_id'=>"integer|exist:categories,name",
-            
+            'title' => 'string|max:255',
+            "description" => 'string',
+            'budget' => "float",
+            'duration' => 'string|max:255',
+            'technologies' => 'required|string',
+            'category' => 'required|string|max:255'
+
         ];
     }
 
 
 
-/*         public function message()
+    /*         public function message()
     {
         return [
             'email.required' => 'Email is a required input.',

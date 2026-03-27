@@ -41,6 +41,8 @@ class RegisterRequest extends FormRequest
             $rules['portfolio'] = 'max:255|string';
             $rules['availability'] = 'string|max:255';
             $rules['description'] = 'max:255|string';
+            $rules['competences'] = 'string';
+            $rules['technologies'] = 'string';
         }
 
         return $rules;
