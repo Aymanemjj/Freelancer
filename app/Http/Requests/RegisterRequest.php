@@ -38,7 +38,7 @@ class RegisterRequest extends FormRequest
             $rules['description'] = 'max:255|string';
         } else if ($this->input('role') == 'freelancer') {
             $rules['price'] = 'required|numeric|min:0';
-            $rules['portfolio'] = 'max:255|string';
+            $rules['portfolio_link'] = 'max:255|string';
             $rules['availability'] = 'string|max:255';
             $rules['description'] = 'max:255|string';
             $rules['competences'] = 'string';

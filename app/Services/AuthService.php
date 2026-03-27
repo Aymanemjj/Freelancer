@@ -25,13 +25,19 @@ class AuthService
         $credentials['password'] = bcrypt($credentials['password']);
 
         $user = User::create($credentials);
-        $token = $user->createToken('freelancers')->plainTextToken;
+        $abilities = null;
+        if($user['role'] == 'client'){
+            $abilities = ['mission:create', 'mission:edit', 'mission:delete', 'candidate:accept', 'candidate:refuse'];
+        }else if($user['role'] == 'freelancer'){
+            $abilities = ['candidate:create', 'candidate:edit', 'candidate:delete'];
+        }
+        $token = $user->createToken('freelancers', $abilities)->plainTextToken;
 
         return response()->json([
             'success' => true,
             'message' => 'Registerd user',
             'data' => ['user' => AuthResource::make($user), 'token' => $token]
-        ]);
+        ],200);
     }
 
     public function login($request)

@@ -15,18 +15,19 @@ class MissionController extends Controller
 
     public function __construct()
     {
-        $this->MissionService = new MissionService;
+         $this->MissionService = new MissionService;
     }
 
     public function index()
     {
-        $this->MissionService->index();
+        return $this->MissionService->index();
     }
 
     public function store(StoreMissionRequest $request)
-    {
+    {   
+
         try {
-            $this->MissionService->store($request);
+            return $this->MissionService->store($request);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'fail',

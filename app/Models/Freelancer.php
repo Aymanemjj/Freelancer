@@ -18,7 +18,7 @@ class Freelancer extends User
      */
     protected $fillable = [
         'price',
-        'portfolio',
+        'portfolio_link',
         'availability',
         'rating',
         'description',

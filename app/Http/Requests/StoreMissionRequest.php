@@ -26,9 +26,9 @@ class StoreMissionRequest extends FormRequest
     {
         return [
             'title'=>'string|max:255|required',
-            "description"=>'string',
-            'budget'=>"float|required",
-            'duration'=>'string|max:255',
+            "description"=>'required|string',
+            'budget'=>"numeric|required",
+            'duration'=>'required|string|max:255',
             'technologies'=>'required|string',
             'category'=>'required|string|max:255'
         ];
