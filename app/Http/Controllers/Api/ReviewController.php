@@ -17,6 +17,8 @@ class ReviewController extends Controller
 
 
     public function index($id){
-        
+        return $this->ReviwService->index($id);
     }
+
+    public function store($id, )
 }
