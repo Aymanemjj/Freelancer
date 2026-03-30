@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class CandidateController extends Controller
 {
-        protected CandidateService $CandidateService;
+    protected CandidateService $CandidateService;
 
     public function __construct()
     {
@@ -47,7 +47,7 @@ class CandidateController extends Controller
         }
     }
 
-        public function update($id, UpdateCandidateRequest $request)
+    public function update($id, UpdateCandidateRequest $request)
     {
         try {
             return $this->CandidateService->update($id, $request);
@@ -59,7 +59,7 @@ class CandidateController extends Controller
         }
     }
 
-        public function destroy($id)
+    public function destroy($id)
     {
         try {
             return $this->CandidateService->destroy($id);
@@ -71,4 +71,28 @@ class CandidateController extends Controller
         }
     }
 
+
+    public function accept($id)
+    {
+        try {
+            return $this->CandidateService->accept($id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function reject($id)
+    {
+        try {
+            return $this->CandidateService->reject($id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }

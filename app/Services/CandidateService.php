@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Factories\UserFactory;
 use App\Http\Resources\CandidateResource;
 use App\Models\Candidate;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class CandidateService
         //
     }
 
-        public function index($id)
+    public function index($id)
     {
         $candidates = Candidate::where('mission_id', $id)->get();
 
@@ -27,7 +28,7 @@ class CandidateService
         ]);
     }
 
-    public function store($id,$request)
+    public function store($id, $request)
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
@@ -113,4 +114,67 @@ class CandidateService
         ], 200);
     }
 
+    public function accept($id)
+    {
+        $candidate = Candidate::find($id);
+        if ((new UserFactory())(Auth::id())->role != 'client') {
+            return response()->json([
+                'success' => false,
+                'message' => "Your not a client"
+            ], 403);
+        }
+        if ($candidate == null) {
+            return response()->json([
+                'success' => false,
+                'message' => "Can't find this candidate"
+            ], 404);
+        }
+
+        if ($candidate->mission->owner->id != Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'message' => "Can't accept candidates in a mission that's not yours"
+            ], 403);
+        }
+
+        $candidate->statut = 'accepted';
+        $candidate->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Accepted candidate"
+        ], 200);
+    }
+
+        public function reject($id)
+    {
+        $candidate = Candidate::find($id);
+        if ((new UserFactory())(Auth::id())->role != 'client') {
+            return response()->json([
+                'success' => false,
+                'message' => "Your not a client"
+            ], 403);
+        }
+        if ($candidate == null) {
+            return response()->json([
+                'success' => false,
+                'message' => "Can't find this candidate"
+            ], 404);
+        }
+
+        if ($candidate->mission->owner->id != Auth::id()) {
+            return response()->json([
+                'success' => false,
+                'message' => "Can't reject candidates in a mission that's not yours"
+            ], 403);
+        }
+
+        $candidate->statut = 'rejected';
+        $candidate->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Rejected candidate"
+        ], 200);
+    }
 }
