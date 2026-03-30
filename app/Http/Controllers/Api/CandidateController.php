@@ -18,15 +18,15 @@ class CandidateController extends Controller
         $this->CandidateService = new CandidateService;
     }
 
-    public function index()
+    public function index($id)
     {
-        $this->CandidateService->index();
+        $this->CandidateService->index($id);
     }
 
-    public function store(StoreCandidateRequest $request)
+    public function store($id, StoreCandidateRequest $request)
     {
         try {
-            $this->CandidateService->store($request);
+            $this->CandidateService->store($id, $request);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'fail',
@@ -35,10 +35,10 @@ class CandidateController extends Controller
         }
     }
 
-    public function show($id)
+    public function show($mission_id, $candidate_id)
     {
         try {
-            return $this->CandidateService->show($id);
+            return $this->CandidateService->show($mission_id, $candidate_id);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'fail',
