@@ -42,6 +42,38 @@ class ReviewService
             "success" => true,
             'message' => 'Review posted',
             'data' => ['review' => ReviewResource::make($review)]
+        ], 201);
+    }
+
+    public function update($id, $request)
+    {
+        $validated = $request->validated();
+
+        $review = Review::find($id);
+        $review->update($validated);
+        return response()->json([
+            "success" => true,
+            'message' => 'Review updated',
+            'data' => ['review' => ReviewResource::make($review)]
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $review = Review::find($id);
+
+        if (!$review) {
+            return response()->json([
+                "success" => false,
+                'message' => 'Review not Found',
+            ], 402);
+        }
+
+        $review->destroy();
+
+        return response()->json([
+            "success" => true,
+            'message' => 'Review deleted',
         ], 200);
     }
 }
