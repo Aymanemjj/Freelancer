@@ -6,11 +6,12 @@ use App\Models\Admin;
 use App\Models\Client;
 use App\Models\Freelancer;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserFactory
 {
     public function __invoke($id){
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         switch($user->role){
             case "admin":
@@ -23,7 +24,7 @@ class UserFactory
                 return Freelancer::find($id);
                 break;
             default:
-                return null;
+                throw new ModelNotFoundException();
                 break;
         }
         

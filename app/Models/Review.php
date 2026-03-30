@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Review extends Model
@@ -11,11 +12,11 @@ class Review extends Model
 
     public function owner()
     {
-        return  $this->belongsTo(User::class, 'owner_id');
+        return (new UserFactory())($this->owner_id);
     }
 
     public function target()
     {
-        return  $this->hasMany(User::class, 'target_id');
+        return (new UserFactory())($this->target_id);
     }
 }
